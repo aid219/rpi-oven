@@ -1,0 +1,46 @@
+{
+  "theme": "assets",
+  "buttons": {
+    "start": {
+      "x": 140,
+      "y": 120,
+      "width": 200,
+      "height": 80,
+      "color": [0, 100, 200],
+      "text": "ВКЛ",
+      "action": "start_oven"
+    },
+    "stop": {
+      "x": 140,
+      "y": 220,
+      "width": 200,
+      "height": 80,
+      "color": [200, 50, 50],
+      "text": "ВЫКЛ",
+      "action": "stop_oven"
+    }
+  },
+  "animations": {
+    "heart": {
+      "x": 50,
+      "y": 50,
+      "width": 80,
+      "height": 80,
+      "type": "pulse"
+    }
+  },
+  "labels": {
+    "status": {
+      "x": 140,
+      "y": 30,
+      "font_size": 28,
+      "text": "Управление печью"
+    },
+    "temp": {
+      "x": 140,
+      "y": 280,
+      "font_size": 22,
+      "text": "Температура: 0°C"
+    }
+  }
+}

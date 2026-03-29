@@ -1,0 +1,2 @@
+# UART сканер - постоянное правило прав доступа
+SUBSYSTEM=="tty", KERNEL=="ttyS0", GROUP="dialout", MODE="0660"

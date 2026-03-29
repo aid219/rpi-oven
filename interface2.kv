@@ -1,0 +1,86 @@
+#:kivy 2.3.0
+
+# Интерфейс №2 - с круглыми кнопками и GIF анимацией
+# Те же методы main.py, другой дизайн
+
+<MainScreen>:
+    orientation: 'vertical'
+    padding: 50
+    spacing: 30
+
+    Label:
+        text: 'Oven Control v2'
+        font_size: '32sp'
+        size_hint_y: None
+        height: 50
+
+    BoxLayout:
+        size_hint_y: None
+        height: 200
+        spacing: 50
+        padding: 20
+
+        # Кнопка START - круглая зелёная
+        FloatLayout:
+            size_hint_x: 0.5
+
+            Button:
+                text: 'START'
+                font_size: '20sp'
+                background_color: 0, 0.5, 0, 1
+                background_normal: ''
+                border: 0, 0, 0, 0
+                on_press: root.on_start_press()
+                canvas.before:
+                    Color:
+                        rgba: 0, 0.7, 0, 1
+                    Ellipse:
+                        pos: self.pos
+                        size: self.size
+
+        # Кнопка STOP - круглая красная
+        FloatLayout:
+            size_hint_x: 0.5
+
+            Button:
+                text: 'STOP'
+                font_size: '20sp'
+                background_color: 0.5, 0, 0, 1
+                background_normal: ''
+                border: 0, 0, 0, 0
+                on_press: root.on_stop_press()
+                canvas.before:
+                    Color:
+                        rgba: 0.7, 0, 0, 1
+                    Ellipse:
+                        pos: self.pos
+                        size: self.size
+
+    BoxLayout:
+        size_hint_y: None
+        height: 80
+        spacing: 20
+        padding: 20
+
+        Label:
+            text: 'Temp:'
+            font_size: '20sp'
+
+        ProgressBar:
+            id: temp_bar
+            max: 300
+            value: 150
+
+        Slider:
+            min: 0
+            max: 300
+            value: 150
+            size_hint_x: None
+            width: 150
+            on_value: temp_bar.value = self.value; root.on_temp_changed(int(self.value))
+
+        Label:
+            text: str(int(temp_bar.value)) + '°C'
+            font_size: '20sp'
+            size_hint_x: None
+            width: 80

@@ -1,0 +1,15 @@
+<MainScreen>:
+    orientation: 'vertical'
+    padding: 50
+    spacing: 20
+
+    Label:
+        id: status_label
+        text: 'Hello, Kivy!'
+        font_size: '24sp'
+
+    Button:
+        id: click_button
+        text: 'Click me'
+        size_hint: 0.5, 0.5
+        on_press: root.on_button_press()

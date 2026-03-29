@@ -1,0 +1,55 @@
+#:kivy 2.3.0
+
+# Интерфейс №1 - минималистичный
+# Кнопки привязаны к методам main.py через on_press
+
+<MainScreen>:
+    orientation: 'vertical'
+    padding: 50
+    spacing: 30
+
+    Label:
+        text: 'Oven Control'
+        font_size: '32sp'
+        size_hint_y: None
+        height: 50
+
+    BoxLayout:
+        size_hint_y: None
+        height: 100
+        spacing: 20
+
+        Button:
+            text: 'START'
+            font_size: '24sp'
+            background_color: 0, 0.7, 0, 1
+            on_press: root.on_start_press()
+
+        Button:
+            text: 'STOP'
+            font_size: '24sp'
+            background_color: 0.7, 0, 0, 1
+            on_press: root.on_stop_press()
+
+    BoxLayout:
+        size_hint_y: None
+        height: 80
+        spacing: 20
+        padding: 20
+
+        Label:
+            text: 'Temperature:'
+            font_size: '20sp'
+
+        Slider:
+            id: temp_slider
+            min: 0
+            max: 300
+            value: 150
+            on_value: root.on_temp_changed(int(self.value))
+
+        Label:
+            text: str(int(temp_slider.value)) + '°C'
+            font_size: '20sp'
+            size_hint_x: None
+            width: 80
