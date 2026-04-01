@@ -1,0 +1,20 @@
+[Unit]
+Description=Kivy Oven UI
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /home/qummy/rpi-oven/oven_ui_kivy/main.py
+WorkingDirectory=/home/qummy/rpi-oven/oven_ui_kivy
+User=qummy
+Group=qummy
+Restart=on-failure
+RestartSec=5
+Environment="DISPLAY=:0"
+Environment="KIVY_VIDEO=gl"
+
+# Разрешить доступ к GPIO и I2C (если нужно)
+# AmbientCapabilities=CAP_SYS_RAWIO
+
+[Install]
+WantedBy=multi-user.target

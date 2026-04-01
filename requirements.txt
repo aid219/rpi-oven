@@ -1,4 +1,9 @@
 kivy>=2.3.0
+kivy-deps.gstreamer>=0.3.0
+filetype>=1.2.0
+docutils>=0.19
+pygments>=2.0.0
+Kivy-Garden>=0.1.4
 pygame>=2.0.0
 pyserial>=3.5
 numpy>=1.20.0
