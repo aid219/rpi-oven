@@ -61,43 +61,6 @@ from screens.dashboard_screen_v2 import DashboardScreen
 from screens.settings_screen import SettingsScreen
 
 
-class FPSMonitor:
-    """Монитор FPS для отладки - ЧЕРЕЗ Clock.get_fps()"""
-    
-    def __init__(self):
-        self.fps_history = []
-        self.min_fps = 999
-        self.max_fps = 0
-        self.frame_count = 0
-        self.last_log = 0
-        
-    def update(self, dt):
-        # Используем Clock.get_fps() - это правильный способ
-        fps = Clock.get_fps()
-        
-        # Пропускаем первые замеры (прогрев)
-        if fps < 0.1:
-            return True
-            
-        self.fps_history.append(fps)
-        if len(self.fps_history) > 60:  # 1 секунда при 60 FPS
-            self.fps_history.pop(0)
-        
-        if len(self.fps_history) > 10:
-            self.min_fps = min(self.fps_history)
-            self.max_fps = max(self.fps_history)
-            avg_fps = sum(self.fps_history) / len(self.fps_history)
-            
-            # Логирование каждые 2 секунды или если FPS упал
-            import time
-            now = time.time()
-            if fps < 40 or (now - self.last_log) > 2:
-                logging.info(f"FPS: {fps:.1f} (avg:{avg_fps:.1f}, min:{self.min_fps:.1f}, max:{self.max_fps:.1f})")
-                self.last_log = now
-        
-        return True
-
-
 class OvenScreenManager(ScreenManager):
     """Менеджер экранов с МИНИМАЛЬНЫМИ артефактами"""
     
@@ -119,10 +82,7 @@ class OvenApp(App):
     
     def build(self):
         self.title = 'Oven Control'
-        
-        # Монитор FPS для отладки
-        self.fps_monitor = FPSMonitor()
-        
+
         # Создаём менеджер экранов
         self.sm = OvenScreenManager()
         # Эффект перехода - FadeTransition (плавное затухание)
@@ -140,9 +100,7 @@ class OvenApp(App):
     def on_start(self):
         """При запуске"""
         logging.info("Oven App started (optimized)")
-        # Запускаем мониторинг FPS каждый кадр (для точности)
-        Clock.schedule_interval(self.fps_monitor.update, 0)
-        
+
     def on_stop(self):
         logging.info("Oven App stopped")
 

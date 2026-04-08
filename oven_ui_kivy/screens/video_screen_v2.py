@@ -45,22 +45,21 @@ class VideoScreen(Screen):
         
         # 2. Видео (занимает доступное место)
         video_box = BoxLayout()
-        
-        if VIDEO_AVAILABLE:
-            try:
-                self.video = Video(
-                    source="assets/videos/1.mp4",
-                    size_hint=(1, 1)
-                )
-                video_box.add_widget(self.video)
-            except Exception as e:
-                print(f"Video error: {e}")
-                video_box.add_widget(Label(text='No Video', font_size=dp(32)))
-        else:
+
+        try:
+            self.video = Video(
+                source="assets/videos/1.mp4",
+                size_hint=(1, 1),
+                state='stop'
+            )
+            video_box.add_widget(self.video)
+        except Exception as e:
+            print(f"Video error: {e}")
             video_box.add_widget(Label(text='No Video', font_size=dp(32)))
-        
+            self.video = None
+
         main_layout.add_widget(video_box)
-        
+
         # 3. Кнопки (3 равные кнопки в ряд)
         buttons_layout = BoxLayout(
             orientation='horizontal',
@@ -68,7 +67,7 @@ class VideoScreen(Screen):
             height=dp(60),
             spacing=dp(10)
         )
-        
+
         # PLAY
         self.play_btn = Button(
             text='PLAY',
@@ -77,7 +76,7 @@ class VideoScreen(Screen):
         )
         self.play_btn.bind(on_press=self.toggle_play)
         buttons_layout.add_widget(self.play_btn)
-        
+
         # STOP
         stop_btn = Button(
             text='STOP',
