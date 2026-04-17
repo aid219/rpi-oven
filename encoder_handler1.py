@@ -13,17 +13,20 @@ class Encoder:
         
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
+        
+        # Полный cleanup перед инициализацией
+        GPIO.cleanup([clk_pin, dt_pin])
         GPIO.setup(clk_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         GPIO.setup(dt_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        
+
         # Запоминаем предыдущее состояние
         self.last_clk = GPIO.input(clk_pin)
         self.last_dt = GPIO.input(dt_pin)
-        
+
         self.running = True
-        
+
         # Прерывания только на CLK
-        GPIO.add_event_detect(clk_pin, GPIO.BOTH, callback=self._callback)
+        GPIO.add_event_detect(clk_pin, GPIO.BOTH, callback=self._callback, bouncetime=5)
     
     def _callback(self, channel):
         if not self.running:

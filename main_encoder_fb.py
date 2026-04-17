@@ -14,7 +14,7 @@ start_time = time.time()
 print(f"[{time.time()-start_time:.2f}s] Старт...")
 
 # Импорт компонентов
-from encoder_handler import Encoder
+from encoder_handler1 import Encoder
 from interface_encoder_fb import UI
 
 print(f"[{time.time()-start_time:.2f}s] Импорт готов")

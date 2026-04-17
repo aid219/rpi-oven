@@ -15,26 +15,30 @@ from kivy.graphics import Color, RoundedRectangle
 
 class AnimatedButton(Button):
     """Анимированная кнопка с эффектами"""
-
+    
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.background_normal = ""
+        self.background_normal = ''
         self.background_color = (0.2, 0.3, 0.5, 1)
         self.color = (1, 1, 1, 1)
         self.font_size = dp(18)
         self.border_radius = [dp(10)]
-
+        
         # Градиентный фон через canvas
         with self.canvas.before:
             Color(0.2, 0.3, 0.5, 1)
-            self.rect = RoundedRectangle(size=self.size, pos=self.pos, radius=[dp(10)])
-
+            self.rect = RoundedRectangle(
+                size=self.size,
+                pos=self.pos,
+                radius=[dp(10)]
+            )
+        
         self.bind(size=self._update_rect, pos=self._update_rect)
-
+        
     def _update_rect(self, instance, value):
         self.rect.pos = instance.pos
         self.rect.size = instance.size
-
+    
     def on_touch_down(self, touch):
         if self.collide_point(*touch.pos):
             # Анимация нажатия
@@ -42,7 +46,7 @@ class AnimatedButton(Button):
             anim.start(self)
             return super().on_touch_down(touch)
         return False
-
+    
     def on_touch_up(self, touch):
         if self.collide_point(*touch.pos):
             # Возврат к исходному цвету
@@ -54,84 +58,58 @@ class AnimatedButton(Button):
 
 class MainScreen(Screen):
     """Главный экран меню"""
-
+    
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.build_ui()
-
+        
     def build_ui(self):
         """Построение интерфейса"""
         layout = FloatLayout()
-
+        
         # Заголовок
         title = Label(
-            text="OVEN CONTROL",
+            text='OVEN CONTROL',
             font_size=dp(32),
             bold=True,
             color=(1, 1, 1, 1),
             size_hint=(1, 0.15),
-            pos_hint={"top": 1},
+            pos_hint={'top': 1}
         )
         layout.add_widget(title)
+        
 
-        # Кнопки меню
         btn_layout = BoxLayout(
-            orientation="vertical",
+            orientation='vertical',
             spacing=dp(15),
             padding=dp(20),
             size_hint=(0.9, 0.6),
-            pos_hint={"center_x": 0.5, "center_y": 0.5},
+            pos_hint={'center_x': 0.5, 'center_y': 0.5}
         )
-
-        # Кнопка "Видео" - БЕЗ эмодзи
-        video_btn = AnimatedButton(text="VIDEO", size_hint_y=0.25)
-        video_btn.bind(on_press=self.go_to_video)
-        btn_layout.add_widget(video_btn)
-
-        # Кнопка "Панель управления" - БЕЗ эмодзи
-        dashboard_btn = AnimatedButton(text="DASHBOARD", size_hint_y=0.25)
-        dashboard_btn.bind(on_press=self.go_to_dashboard)
-        btn_layout.add_widget(dashboard_btn)
-
-        # Кнопка "Настройки" - БЕЗ эмодзи
-        settings_btn = AnimatedButton(text="SETTINGS", size_hint_y=0.25)
+        
+        settings_btn = AnimatedButton(
+            text='SETTINGS',
+            size_hint_y=0.25
+        )
         settings_btn.bind(on_press=self.go_to_settings)
         btn_layout.add_widget(settings_btn)
-
-        # my test
-        some_btn = AnimatedButton(text="Some", size_hint_y=0.25)
-        some_btn.bind(on_press=self.go_to_some)
-        btn_layout.add_widget(some_btn)
-        # my test
+        
         layout.add_widget(btn_layout)
-
+        
         self.add_widget(layout)
-
-    def go_to_video(self, instance):
-        """Переход на экран видео"""
-        if self.manager:
-            self.manager.current = "video"
-
-    def go_to_dashboard(self, instance):
-        """Переход на панель управления"""
-        if self.manager:
-            self.manager.current = "dashboard"
-
+           
     def go_to_settings(self, instance):
         """Переход в настройки"""
         if self.manager:
-            self.manager.current = "settings"
+            self.manager.current = 'settings'
 
-    def go_to_some(self, instance):
-        """Переход в настройки"""
-        if self.manager:
-            self.manager.current = "some"
+ 
 
 
 # KV-разметка для фона
 from kivy.lang import Builder
 
-Builder.load_string("""
+Builder.load_string('''
 <MainScreen>:
     canvas.before:
         Color:
@@ -139,4 +117,4 @@ Builder.load_string("""
         Rectangle:
             pos: self.pos
             size: self.size
-""")
+''')

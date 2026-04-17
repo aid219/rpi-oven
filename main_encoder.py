@@ -10,7 +10,7 @@ import pygame
 PID_FILE = '/tmp/encoder.pid'
 
 # Импорт компонентов
-from encoder_handler import Encoder
+from encoder_handler1 import Encoder
 from interface_encoder import UI
 
 # Глобальные

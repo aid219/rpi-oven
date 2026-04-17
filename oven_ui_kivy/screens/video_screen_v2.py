@@ -52,6 +52,7 @@ class VideoScreen(Screen):
                 size_hint=(1, 1),
                 state='stop'
             )
+            self.video.bind(on_eos=self.on_video_end)
             video_box.add_widget(self.video)
         except Exception as e:
             print(f"Video error: {e}")
@@ -120,6 +121,13 @@ class VideoScreen(Screen):
         if self.manager:
             self.manager.current = 'main'
         
+    def on_video_end(self, *args):
+        """При окончании видео - остановить и сбросить"""
+        if self.video:
+            self.video.state = 'stop'
+            self.video.position = 0
+            self.play_btn.text = 'PLAY'
+
     def on_leave(self):
         """Остановить видео при уходе с экрана"""
         if self.video:
